@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Advertisements</title>
+</head>
+<body>
+<div align="center">
+    <h1>Advertisement List</h1>
+    <a href="new">Create New Advertisement</a>
+    <a href="/showUsers"><p th:if="${user.isAdmin==1}">Check out Users</p></a>
+    <form th:action="@{/searchAdvertisements}" method="get">
+                <input type="text" name="descriptionSearch" id="descriptionSearch"/>
+                <button type="submit">Search</button>
+    </form>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Advertisement ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Contact Name</th>
+            <th>Contact Phone</th>
+            <th>Price</th>
+            <th>Additional actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="advertisement : ${listAdvertisements}">
+            <td th:text="${advertisement.id}">Advertisement ID</td>
+            <td th:text="${advertisement.title}">Title</td>
+            <td th:text="${advertisement.description}">Description</td>
+            <td th:text="${advertisement.contactName}">Contact Name</td>
+            <td th:text="${advertisement.contactPhone}">Contact Phone</td>
+            <td th:text="${advertisement.price}">Price</td>
+            <td>
+                <a th:href="@{'/edit/' + ${advertisement.id}}"><p th:if="${user.id == advertisement.user || user.isAdmin==1}">Edit</p></a>                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{'/delete/' + ${advertisement.id}}"><p th:if="${user.id == advertisement.user || user.isAdmin==1}">Delete</p></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
